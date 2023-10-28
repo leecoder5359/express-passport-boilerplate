@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const userSchema = mongoose.Schema({
+const { Schema } = mongoose;
+const userSchema = new Schema({
     email: {
         type: String,
         unique: true,
@@ -16,4 +17,14 @@ const userSchema = mongoose.Schema({
     },
 });
 
-export const User = mongoose.model('User', userSchema);
+userSchema.method.comparePassword = function(plainPassword, cb) {
+    if (plainPassword === this.password) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+
+    cb({ error: "error" });
+};
+
+export const User = mongoose.model("User", userSchema);
