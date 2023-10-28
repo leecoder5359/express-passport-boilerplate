@@ -3,11 +3,11 @@ import { User } from "../models/users.model.js";
 
 export const renderSignUp = (req, res) => {
     res.render("signup");
-}
+};
 
 export const renderLogin = (req, res) => {
     res.render("login");
-}
+};
 
 export const login = (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
@@ -21,7 +21,7 @@ export const login = (req, res, next) => {
             res.redirect("/");
         });
     })(req, res, next);
-}
+};
 
 export const signUp = async (req, res) => {
     const user = new User(req.body);
@@ -34,4 +34,4 @@ export const signUp = async (req, res) => {
     } catch (e) {
         console.error(e);
     }
-}
+};

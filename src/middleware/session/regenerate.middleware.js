@@ -1,4 +1,4 @@
-export const regenerate = function (req, res, next) {
+export const regenerate = (req, res, next) => {
     if (!req.session?.regenerate) {
         req.session.regenerate = (cb) => {
             cb();
@@ -11,4 +11,4 @@ export const regenerate = function (req, res, next) {
         };
     }
     next();
-}
+};

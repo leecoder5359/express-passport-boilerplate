@@ -3,9 +3,10 @@ import * as path from "path";
 import "./config/mongo.config.js";
 import "./config/passport.config.js";
 import cookieSession from "cookie-session";
-import { regenerate } from "./middlewares/session/regenerate.middleware.js";
+import { regenerate } from "./middleware/session/regenerate.middleware.js";
 import { authRouter } from "./routes/auth.router.js";
 import { indexRouter } from "./routes/index.router.js";
+import passport from "passport";
 
 const app = express();
 
@@ -19,6 +20,11 @@ app.use(cookieSession({
     name: "cookie-session-name",
     keys: ["key"],
 }));
+
+//passport
+app.use(passport.session());
+app.use(passport.initialize());
+
 app.use(regenerate);
 
 

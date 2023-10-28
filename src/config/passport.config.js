@@ -35,5 +35,3 @@ const deserializeUser = (id, done) => {
 passport.use("local", localStrategy);
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
-passport.session();
-passport.initialize();
