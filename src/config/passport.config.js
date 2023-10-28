@@ -3,9 +3,9 @@ import { Strategy } from "passport-local";
 import { User } from "../models/users.model.js";
 
 const localStrategy = new Strategy({
-        usernameField: "email", passwordField: "password",
-    }, (email, password, done) => {
-    User.findOne({ email: email.toLocaleLowerCase()})
+    usernameField: "email", passwordField: "password",
+}, (email, password, done) => {
+    User.findOne({ email: email.toLocaleLowerCase() })
         .then(user => {
             if (!user) {
                 return done(null, false, { msg: `Email ${email} not found` });
@@ -18,7 +18,7 @@ const localStrategy = new Strategy({
 
                 return done(null, false, { msg: "Invalid email or password" });
             });
-        })
+        });
 });
 
 const serializeUser = (user, done) => {
@@ -35,3 +35,5 @@ const deserializeUser = (id, done) => {
 passport.use("local", localStrategy);
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
+passport.session();
+passport.initialize();
