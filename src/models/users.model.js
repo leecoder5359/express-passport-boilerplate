@@ -17,14 +17,12 @@ const userSchema = new Schema({
     },
 });
 
-userSchema.method.comparePassword = function(plainPassword, cb) {
+userSchema.methods.comparePassword = function(plainPassword, cb) {
     if (plainPassword === this.password) {
         cb(null, true);
     } else {
         cb(null, false);
     }
-
-    cb({ error: "error" });
 };
 
 export const User = mongoose.model("User", userSchema);

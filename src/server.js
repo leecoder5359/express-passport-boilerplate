@@ -4,17 +4,32 @@ import * as path from "path";
 import { User } from "./models/users.model.js";
 import passport from "passport";
 import "./config/passport.js";
-import session from "express-session";
+import cookieSession from "cookie-session";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(session({
-    secret: 'your-secret-key', // 세션 데이터 암호화를 위한 키
-    resave: false,
-    saveUninitialized: true
+app.use(cookieSession({
+    name: 'cookie-session-name',
+    keys: ["key"],
 }));
+app.use(function(request, response, next) {
+    if (!request.session?.regenerate) {
+        request.session.regenerate = (cb) => {
+            cb();
+        };
+    }
+
+    if (!request.session?.save) {
+        request.session.save = (cb) => {
+            cb();
+        };
+    }
+    next();
+});
+
+
 app.use("/static", express.static(path.join(path.resolve(), "public")));
 
 app.use(passport.initialize());
@@ -31,24 +46,28 @@ mongoose.connect("mongodb://localhost:27017/passport")
 
 //view engin setup
 app.set("view engine", "ejs");
-app.set("views", path.join(path.resolve(), "src", "views"));
+app.set("views", path.join(path.resolve(), "views"));
 
 app.get("/login", (req, res) => {
     res.render("login");
 });
 
+app.get("/", (req, res) => {
+    res.render("index");
+});
+
 app.post("/login", (req, res, next) => {
-    passport.authenticate('local', (err, user, info) => {
+    passport.authenticate("local", (err, user, info) => {
         if (err) return next(err);
 
-        if (!user) return res.json({msg: info});
+        if (!user) return res.json({ msg: info });
 
         req.login(user, function(err) {
             if (err) return next(err);
 
-            res.redirect('/');
-        })
-    })
+            res.redirect("/");
+        });
+    })(req, res, next);
 });
 
 app.get("/signup", (req, res) => {
@@ -61,8 +80,8 @@ app.post("/signup", async (req, res) => {
     try {
         await user.save();
         return res.status(200).json({
-            success: true
-        })
+            success: true,
+        });
     } catch (e) {
         console.error(e);
     }
