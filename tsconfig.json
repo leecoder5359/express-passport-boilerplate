@@ -1,0 +1,52 @@
+{
+  //컴파일러 옵션 지정
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "sourceMap": true,
+    "outDir": "dist",
+    "moduleResolution": "node",
+    // 컴파일될 ES(JS) 버전 명시 - "ES2015 권장"
+    // 모듈 시스템 지정 - "CommonJS", "AMD", "ESNext"
+    // 모듈 해석 방식 지정 - "Node", "Classic"
+    // ESM 모듈 방식 호환성 활성화 여부
+    "esModuleInterop": true,
+    // 모든 파일을 모듈로 컴파일, import 혹은 export 키워드 필수
+    "isolatedModules": true,
+    // 모듈 해석에 사용할 기준 경로 지정
+    "baseUrl": "./src",
+    // 컴파일러가 참조할 타입 선언(d.ts)의 경로를 지정
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
+    // 컴파일에서 사용할 라이브러리 지정 - "ESNext", "DOM"
+    "lib": ["ESNext", "DOM"],
+    // 더 엄격한 타입 검사 활성화
+    "strict": true,
+    // 암시적 any 타입 검사 활성화
+    "noImplicitAny": false,
+    // 암시적 this 타입 검사 활성화
+    "noImplicitThis": false,
+    // 엄격한 Nullish 타입 검사 활성화
+    "strictNullChecks": false,
+    // 엄격한 함수의 매개변수 타입 검사 활성화
+    "strictFunctionTypes": false,
+    // 엄격한 클래스의 속성 초기화 검사 활성화
+    "strictPropertyInitialization": false,
+    // 엄격한 Bind, Call, Apply 메소드의 인수 활성화
+    "strictBindCallApply": false
+  },
+  "ts-node": {
+    "esm": true
+  },
+  // 컴파일할 파일 경로 목록
+  "include": [
+    "src/**/*.ts",
+    "*.ts"
+  ],
+  // 컴파일을 제외할 파일경로 목록
+  "exclude": [
+    "node_modules"
+  ]
+}
