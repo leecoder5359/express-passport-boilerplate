@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const { Schema } = mongoose;
 const userSchema = new Schema({
@@ -18,11 +19,25 @@ const userSchema = new Schema({
 });
 
 userSchema.methods.comparePassword = function(plainPassword, cb) {
-    if (plainPassword === this.password) {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
+    bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
 };
+
+userSchema.pre("save", function(next) {
+    let user = this;
+    if (!user.isModified("password")) return next();
+
+    bcrypt.genSalt(10, function(err, salt) {
+        if (err) return next();
+
+        bcrypt.hash(user.password, salt, function(err, hash) {
+            if (err) return next(err);
+            user.password = hash;
+            next();
+        });
+    });
+});
 
 export const User = mongoose.model("User", userSchema);

@@ -36,7 +36,8 @@ export const signUp = async (req, res) => {
     const user = new User(req.body);
 
     try {
-        await user.save();
+        const test = await user.save();
+        console.log('test', test);
         return res.status(200).json({
             success: true,
         });
