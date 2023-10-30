@@ -6,3 +6,6 @@ export const authRouter = express.Router();
 
 authRouter.get("/google", authController.authGoogle);
 authRouter.get("/google/callback", authController.authGoogleCallback);
+
+authRouter.get("/kakao", authController.authKakao);
+authRouter.get("/kakao/callback", authController.authKakaoCallback);
