@@ -4,13 +4,5 @@ import { isNotAuth } from "../middleware/auth.middleware.js";
 
 export const authRouter = express.Router();
 
-authRouter.get("/login", isNotAuth, authController.renderLogin);
-authRouter.post("/login", authController.login);
-
-authRouter.post("/logout", authController.logout);
-
-authRouter.get("/signup", isNotAuth, authController.renderSignUp);
-authRouter.post("/signup", authController.signUp);
-
 authRouter.get("/google", authController.authGoogle);
 authRouter.get("/google/callback", authController.authGoogleCallback);
