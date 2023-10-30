@@ -1,6 +1,15 @@
 import passport from "passport";
 import { User } from "../models/users.model.js";
 
+export const logout = (req, res, next) => {
+    req.logout(function(err) {
+        if (err) return next(err);
+
+        res.redirect('/');
+    })
+};
+
+
 export const renderSignUp = (req, res) => {
     res.render("signup");
 };

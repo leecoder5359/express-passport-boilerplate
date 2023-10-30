@@ -33,7 +33,7 @@ app.use("/auth", authRouter);
 
 //view engin setup
 app.set("view engine", "ejs");
-app.set("views", path.join(path.resolve(), "views"));
+app.set("views", path.join(path.resolve(), "src", "views"));
 
 const port = 3000;
 app.listen(port, () => {
