@@ -5,8 +5,8 @@ export const logout = (req, res, next) => {
     req.logout(function(err) {
         if (err) return next(err);
 
-        res.redirect('/');
-    })
+        res.redirect("/");
+    });
 };
 
 
@@ -37,11 +37,22 @@ export const signUp = async (req, res) => {
 
     try {
         const test = await user.save();
-        console.log('test', test);
+        console.log("test", test);
         return res.status(200).json({
             success: true,
         });
     } catch (e) {
         console.error(e);
     }
+};
+
+export const authGoogle = (req, res, next) => {
+    passport.authenticate("google")(req, res, next);
+};
+
+export const authGoogleCallback = (req, res, next) => {
+    passport.authenticate("google", {
+        successReturnToOrRedirect: "/",
+            failureRedirect: "/login",
+    })(req, res, next);
 };

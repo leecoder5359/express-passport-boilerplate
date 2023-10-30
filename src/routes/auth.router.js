@@ -11,3 +11,6 @@ authRouter.post("/logout", authController.logout);
 
 authRouter.get("/signup", isNotAuth, authController.renderSignUp);
 authRouter.post("/signup", authController.signUp);
+
+authRouter.get("/google", authController.authGoogle);
+authRouter.get("/google/callback", authController.authGoogleCallback);
