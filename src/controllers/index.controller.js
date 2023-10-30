@@ -1,5 +1,6 @@
 import passport from "passport";
 import { User } from "../models/users.model.js";
+import { sendMail } from "../mail/mail.js";
 
 export const renderHome = (req, res) => {
     res.render("index");
@@ -40,8 +41,8 @@ export const signUp = async (req, res) => {
     const user = new User(req.body);
 
     try {
-        const test = await user.save();
-        console.log("test", test);
+        const { email, name } =await user.save();
+        await sendMail(email, name, 'welcome');
         return res.status(200).json({
             success: true,
         });
